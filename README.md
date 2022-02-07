@@ -1,12 +1,12 @@
 # URL Scan
 
 'URL Scan' project is a design for a system, that would be able to accept multiple user request, that wish to analyse suspicious URLs,
-Through a web service called urlscan.
+through a web service called urlscan.
 
 
 ## Description
 
-The system was design to handle multiple request of users and output the result.
+The system was design to handle multiple requests from users, and output the results.
 
 The result for each user request will be: 
 
@@ -22,30 +22,34 @@ The main high level design diagram is as follows:
 
 ## Detailed Description
 First I will elaborate on the actual flow while explaining some of the thoughts, considerations and alternatives, 
-That I came across while designing the system.
+that I came across while designing the system.
 
 Since on premise option was not overruled, two main approaches were considered.
 An on premise option, and a cloud based solution such as AWS, Azure, google Cloud etc...
 
 ### Early design path
 After thinking about what is the main purpose of the system, the complexity of the requirements, performance, efficiency,
-I have chosen to select the premise option.
+I have chosen to select the on premise option.
 
 Since IMHO, neither was a bad decision, it was hard to decide. 
 
 A combination of EC2 for hosting and scaling with Amazon S3 for storage and other would be a good fit as well.
 
 But several reasons affected my decision, such as:
+
 On premise pros:
+
 The increasing compute power of simple low-cost servers (as well as personal laptops)
 the need for a very fast and reliable time limit query answers, 
-the assumption that there is probably no need for a big IT team for such system, 
+the assumption that there is probably no need for a big IT team for such a system, 
 the importance of handling transactions efficiently and in a reliable way,
-(also an assumption that there a probably not needing to perform a huge scale up overnight)
+(also an assumption that it is probably not needed to perform a huge scale up overnight)
 
-While I took into consideration my own personal experience with cloud services had issues of:
+While I took into consideration some of my own personal experience with cloud based services, and the issues that I had with them:
+
+
 High and unpredictable costs (even with cost limits), High learning curve, needing cloud experts on complex issues   
-All these made me decide on the premise approach.
+All these made me decide on the premise approach. (perhaps in long term the decision will be reconsidered)
 
 ## Flow
 
@@ -69,19 +73,19 @@ From here, an apache flink job will consume the messages from kafka, process and
 Apache Flink is an open-source, unified stream-processing and batch-processing framework.
 It has several key feature that make it a good fit for the system.
 1. Flink works really well and have full built in support for working with kafka (as well as other interfaces), and handling transactions reliably.
-2. Flink is designed for handling large amounts of streaming date with high throughput
-3. Flink also takes care of parallelism well and with ease 
+2. Flink is designed for handling large amounts of streaming data with high throughput.
+3. Flink also takes care of parallelism well and with ease.
 4. Flink also handle state transactions very efficiently and easily
 
 All this made me choose Flink as the framework. 
 
 
 #### Processing requests
-First we enter Flink 'State function process' called Query Process Handler. (If needed, flink can handle 'key by' session with ease)
+First we enter Flink 'State function process' called Query Process Handler. (If needed, flink can handle 'key by' sessions)
 
 
-Its job is to consume (in parallel) the incoming requests and commit(kafka delete) them when done.
-Another job is to query the Ignite cache state from Rate limit. 
+Its job is to consume (in parallel) the incoming requests and commit(kafka delete) them once done.
+Another job is to query the Ignite cache state for Rate limitations. 
 
 One of the key feature of Flink is its ability to backpressure when needed, so it will suit the current consideration of rate limit.
 
@@ -132,6 +136,7 @@ Finally, a service will consume from the relevant kafka topics and will update t
 
 ## Dependencies
 JAVA is preferred. (other languages are supported)
+
 Linux is preferred.
 
 
