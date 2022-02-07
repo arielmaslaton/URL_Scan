@@ -85,7 +85,7 @@ Another job is to query the Ignite cache state from Rate limit.
 
 One of the key feature of Flink is its ability to backpressure when needed, so it will suit the current consideration of rate limit.
 
-## Apache Ignite
+#### Apache Ignite
 Apache Ignite is a distributed database for high-performance computing with in-memory speed.
 The use for a very fast, shared -in memory- state will fit this solution.
 
@@ -121,7 +121,7 @@ Send a request for Image handler
 
 Send the images to an image writer service
 
-## image handler
+#### Image handler
 The image handler will be in charge of taking the UUID for the urlscan result and request for the url screenshot via scanurl api
 
 Also, besides saving the all the URL requests given by urlscan api reit will send the url for enrichment in order to save as a result the URL page.
@@ -130,7 +130,7 @@ Also, besides saving the all the URL requests given by urlscan api reit will sen
 Finally, a service will consume from the relevant kafka topics and will update the user query lists for the results for each URL.
 
 
-### Dependencies
+## Dependencies
 JAVA is preferred. (other languages are supported)
 Linux is preferred.
 
