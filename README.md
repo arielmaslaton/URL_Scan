@@ -76,8 +76,10 @@ It has several key feature that make it a good fit for the system.
 All this made me choose Flink as the framework. 
 
 
-#### processing dates
-If needed, flink can handle 'key by' session with ease, while entering first Flink 'State process' called Query Process Handler.
+#### Processing requests
+First we enter Flink 'State function process' called Query Process Handler. (If needed, flink can handle 'key by' session with ease)
+
+
 Its job is to consume (in parallel) the incoming requests and commit(kafka delete) them when done.
 Another job is to query the Ignite cache state from Rate limit. 
 
